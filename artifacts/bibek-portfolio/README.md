@@ -32,6 +32,16 @@ You can also edit the Replit project from VS Code over SSH; see Replit's [SSH gu
 5. To update wording, search the files under `artifacts/bibek-portfolio/src` in VS Code (`Ctrl+Shift+F` on Windows/Linux, `Cmd+Shift+F` on macOS). The CSS and visual styling are in the same `src` folder.
 6. Replace `public/Bibek_Regmi_CV.pdf` when your CV changes. Keep that filename unless you also update the page's download link.
 
+## Add ongoing-site photos later
+
+The two frames in the **On site** section are intentionally blank. When you have photos:
+
+1. Add each optimized image to `artifacts/bibek-portfolio/public/`, for example `site-01.jpg`.
+2. In `artifacts/bibek-portfolio/src/App.tsx`, find `ongoingSites` near the top. For the matching frame, change `image: null` to `image: '/site-01.jpg'`, then add a descriptive `alt` text and short `caption`. Leave `image: null` on any frame that should stay empty.
+3. Run the local preview commands above, then use the GitHub steps below to commit and push the changes.
+
+Use a compressed JPG or WebP around 1600 pixels wide to keep the repository light.
+
 If `corepack enable` is blocked by your computer, install pnpm 10.26.1 using the official pnpm installation instructions, then run the remaining commands.
 
 ## Save changes to GitHub

@@ -1,92 +1,26 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { ArrowDownToLine, ArrowUpRight, Menu, X } from 'lucide-react';
+const certificateImage = '/ewb-certificate.jpg';
 
 const sections = [
-  ['about', 'About'],
-  ['experience', 'Experience'],
+  ['about', 'Point of view'],
+  ['field', 'On site'],
+  ['practice', 'Practice'],
   ['research', 'Research'],
-  ['education', 'Education'],
-  ['skills', 'Skills'],
   ['service', 'Service'],
   ['contact', 'Contact'],
 ] as const;
 
-const jobs = [
-  {
-    title: 'Site Engineer',
-    date: 'July 2025 to present',
-    org: 'Bandan Bhagwati Nirman Sewa Pvt. Ltd.',
-    current: true,
-    points: [
-      'Develop detailed plans, timelines, and budgets',
-      'Decide the daily work plan',
-      'Manage labour and machinery',
-      'Ensure construction follows drawings',
-      'Prepare weekly and daily work schedules',
-    ],
-  },
-  {
-    title: 'Construction Project Engineer',
-    date: 'May 2024 to July 2025',
-    org: 'Tundi Group, Kathmandu',
-    points: [
-      'Developed detailed plans, timelines, and budgets',
-      'Collaborated with architects and engineers on project designs',
-      'Assigned tasks to subcontractors and monitored performance to ensure quality standards',
-      'Maintained accurate project records',
-      'Managed contracts with subcontractors and suppliers',
-    ],
-  },
-  {
-    title: 'Construction Supervisor Intern',
-    date: 'August 2023 to February 2024',
-    org: 'Bodhi Holding Pvt. Ltd., Bhairahawa, Lumbini',
-    points: [
-      'Conducted daily site inspections to ensure adherence to safety regulations',
-      'Monitored construction progress, communicated updates, and identified potential problems or delays',
-      'Assigned tasks to subcontractors and monitored performance to ensure quality standards',
-      'Ensured materials conformed to industry standards and provided technical guidance to workers',
-    ],
-  },
-  {
-    title: 'Final Year Project, Team Leader',
-    date: 'September 2021 to July 2022',
-    org: 'Pokhara University, Nepal College of Information Technology (Group NCIT_CIVIL04)',
-    points: [
-      'Led a team of 4 and reported to the supervisor weekly by email and in person',
-      'Conducted detailed cost estimation of the project',
-      'Designed the road using Smart Road software',
-      'Tested the model routinely, analyzed faults, and resolved them',
-      'Studied every research paper relevant to the project',
-    ],
-  },
-];
+type OngoingSite = {
+  id: string;
+  image: string | null;
+  alt: string;
+  caption: string;
+};
 
-const interests = [
-  {
-    heading: 'Resilience and risk',
-    items: ['Risk Management', 'Infrastructure Resilience', 'Seismic Resilience and Disaster Risk Reduction'],
-  },
-  {
-    heading: 'Construction management',
-    items: ['Construction Safety Management', 'Impact on Workforce Dynamics'],
-  },
-  {
-    heading: 'Digital construction',
-    items: [
-      'Building Information Modeling (BIM)',
-      'Robotic Process Automation (RPA)',
-      'Data-Driven Decision-Making and Automation in Construction (RPA, Python)',
-    ],
-  },
-  {
-    heading: 'Sustainability and environment',
-    items: [
-      'Sustainable Construction and Low-Carbon Building Materials',
-      'Life Cycle Assessment (LCA) and Embodied Carbon of Structures',
-      'Environmental Impact Assessment (EIA) in Infrastructure Projects',
-    ],
-  },
+const ongoingSites: OngoingSite[] = [
+  { id: 'site-01', image: null, alt: '', caption: 'Ongoing site · Photo to come' },
+  { id: 'site-02', image: null, alt: '', caption: 'In progress · Photo to come' },
 ];
 
 function BridgeDrawing() {
@@ -99,10 +33,8 @@ function BridgeDrawing() {
 
   return (
     <svg className="bridge-svg" viewBox="0 0 520 310" role="img" aria-labelledby="bridge-title bridge-description">
-      <title id="bridge-title">Suspension bridge, engineering field drawing</title>
-      <desc id="bridge-description">
-        A dimensioned line drawing of a suspension bridge with twin towers, main cable, deck, and vertical hangers.
-      </desc>
+      <title id="bridge-title">Suspension bridge engineering drawing</title>
+      <desc id="bridge-description">A measured line study of a suspension bridge, its towers, cable, deck and hangers.</desc>
       <line className="draw" style={{ '--delay': '0s' } as CSSProperties} x1="10" y1="230" x2="510" y2="230" />
       <line className="draw tower" style={{ '--delay': '.2s' } as CSSProperties} x1="130" y1="230" x2="130" y2="84" />
       <line className="draw tower" style={{ '--delay': '.35s' } as CSSProperties} x1="390" y1="230" x2="390" y2="84" />
@@ -147,11 +79,9 @@ function App() {
       .map(([id]) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) setActiveSection(entry.target.id);
+      }),
       { rootMargin: '-30% 0px -60% 0px' },
     );
     observed.forEach((section) => observer.observe(section));
@@ -163,9 +93,7 @@ function App() {
       <a className="skip-link" href="#main">Skip to content</a>
       <header className="top" id="top">
         <div className="wrap top-row">
-          <a className="brand" href="#top" aria-label="Bibek Regmi, back to top">
-            BR<span>.</span>
-          </a>
+          <a className="brand" href="#top" aria-label="Bibek Regmi, back to top">BR<span>.</span></a>
           <button
             className="menu-toggle"
             type="button"
@@ -179,13 +107,8 @@ function App() {
           </button>
           <nav id="main-nav" className={`nav${menuOpen ? ' open' : ''}`} aria-label="Main navigation">
             {sections.map(([id, label]) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className={activeSection === id ? 'active' : ''}
-                onClick={() => setMenuOpen(false)}
-                data-testid={`link-nav-${id}`}
-              >
+              <a key={id} href={`#${id}`} className={activeSection === id ? 'active' : ''}
+                onClick={() => setMenuOpen(false)} data-testid={`link-nav-${id}`}>
                 {label}
               </a>
             ))}
@@ -197,15 +120,14 @@ function App() {
         <section className="hero" aria-labelledby="hero-title">
           <div className="wrap hero-grid">
             <div className="hero-copy">
-              <p className="eyebrow">Civil engineer · Nepal</p>
+              <p className="eyebrow hero-kicker">Civil engineer · Nepal</p>
               <h1 id="hero-title">Bibek <span>Regmi</span></h1>
               <p className="lede">
-                Licensed civil engineer connecting the detail of the site with the bigger work of building
-                safer, more resilient and sustainable infrastructure.
+                The work is measured in drawings and deadlines. The reason for doing it is people who depend on what we build.
               </p>
               <dl className="hero-meta">
-                <div><dt>Practice</dt><dd>Site engineering &amp; construction management</dd></div>
-                <div><dt>Looking ahead</dt><dd>MS in Construction Management · 2027 intake</dd></div>
+                <div><dt>Today</dt><dd>Site engineering &amp; construction management</dd></div>
+                <div><dt>Long view</dt><dd>Resilient, thoughtful infrastructure</dd></div>
               </dl>
               <div className="actions">
                 <a className="button primary" href="/Bibek_Regmi_CV.pdf" download data-testid="link-download-cv">
@@ -215,194 +137,163 @@ function App() {
                   Get in touch <ArrowUpRight size={15} aria-hidden="true" />
                 </a>
               </div>
+              <p className="hero-footnote">NEPAL ENGINEERING COUNCIL · LICENSED CIVIL ENGINEER</p>
             </div>
 
             <figure className="sheet">
+              <div className="hero-stamp" aria-hidden="true">FIELD<br />TO<br />FUTURE</div>
               <div className="sheet-topline">
-                <span>STRUCTURAL STUDY</span>
-                <span>BR / 001</span>
-                <span>2026</span>
+                <span>STRUCTURAL STUDY</span><span>BR / 001</span><span>NEPAL</span>
               </div>
               <BridgeDrawing />
               <figcaption>
                 <dl className="title-block">
                   <div><dt>Engineer</dt><dd>Bibek Regmi</dd></div>
-                  <div><dt>Licence</dt><dd>Nepal Engineering Council</dd></div>
-                  <div><dt>Degree</dt><dd>B.E. Civil Engineering, Pokhara University, 2023</dd></div>
-                  <div><dt>Current role</dt><dd>Site Engineer, Bandan Bhagwati Nirman Sewa</dd></div>
-                  <div><dt>Next horizon</dt><dd>MS in Construction Management, 2027 intake</dd></div>
+                  <div><dt>Current role</dt><dd>Site Engineer</dd></div>
+                  <div><dt>Education</dt><dd>B.E. Civil Engineering, Pokhara University</dd></div>
+                  <div><dt>Practice</dt><dd>Bandan Bhagwati Nirman Sewa Pvt. Ltd.</dd></div>
+                  <div><dt>Drawing note</dt><dd>A line can connect a calculation to a community.</dd></div>
                 </dl>
               </figcaption>
             </figure>
           </div>
         </section>
 
+        <section className="story-band" aria-label="Engineering point of view">
+          <div className="wrap">
+            <p className="band-label">The through-line</p>
+            <p className="band-line">Good construction is a thousand careful decisions, made well before anyone calls it finished.</p>
+            <span className="band-mark">27°42′N / 85°19′E</span>
+          </div>
+        </section>
+
         <section className="section" id="about">
           <div className="wrap section-grid">
-            <SectionHeading index="01" title="About" />
+            <SectionHeading index="01" title="Point of view" />
             <div className="section-body prose">
               <p>
-                I am a licensed civil engineer in Nepal with a Bachelor of Engineering in Civil Engineering
-                from Pokhara University. I currently work as a Site Engineer, planning the daily work,
-                managing labour and machinery, and checking that construction follows the drawings.
+                I’m Bibek, a licensed civil engineer in Nepal. I work where plans meet the realities of a live site: coordinating people, sequencing work, and keeping construction true to its drawings.
               </p>
               <p>
-                Before this I worked as a construction project engineer and a construction supervisor intern,
-                and I volunteer with Engineers Without Borders Nepal on disaster risk reduction workshops. My
-                research interests sit between structures, construction management, and the environment:
-                BIM, risk management, construction safety, and sustainable, resilient infrastructure.
-              </p>
-              <p>
-                I am applying for a master's degree in Construction Management starting in 2027, and I welcome
-                conversations about research collaboration.
+                My experience has moved from site supervision to project engineering and now site engineering. Across each role, I’m drawn to the same question: how do we make infrastructure work reliably for the people who use it?
               </p>
               <p className="story-note">
-                From daily site plans to long-term resilience, the through-line in my work is practical
-                engineering that serves people and place.
+                Practical on site. Curious about the systems behind it. Always thinking about what lasts.
               </p>
             </div>
           </div>
         </section>
 
-        <section className="section" id="experience">
+        <section className="section field-section" id="field">
+          <div className="wrap">
+            <div className="section-grid">
+              <SectionHeading index="02" title="On site" />
+              <div className="section-body">
+                <div className="field-intro">
+                  <p>Current work, seen from the ground. These frames are intentionally left open for project photographs.</p>
+                  <span className="meta-label">Current practice · Nepal</span>
+                </div>
+                <div className="photo-grid" role="group" aria-label="Ongoing project photograph placeholders">
+                  {ongoingSites.map((site, index) => (
+                    <figure className={`photo-frame${site.image ? ' has-image' : ''}`} key={site.id}>
+                      {site.image && <img className="site-photo" src={site.image} alt={site.alt} loading="lazy" />}
+                      <span className="frame-tag">Site photograph · {String(index + 1).padStart(2, '0')}</span>
+                      <figcaption className="frame-caption">{site.caption}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+                <p className="field-note">PHOTO FRAMES RESERVED · IMAGES WILL BE ADDED BY BIBEK</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section" id="practice">
           <div className="wrap section-grid">
-            <SectionHeading index="02" title="Experience" />
-            <ol className="section-body timeline">
-              {jobs.map((job, index) => (
-                <li className={`job${job.current ? ' current' : ''}`} key={job.title} data-testid={`job-${index}`}>
-                  <div className="job-head">
-                    <h3>{job.title}</h3>
-                    <p className="when">{job.date}</p>
-                  </div>
-                  <p className="org">{job.org}</p>
-                  <ul>{job.points.map((point) => <li key={point}>{point}</li>)}</ul>
-                </li>
-              ))}
-            </ol>
+            <SectionHeading index="03" title="Practice" />
+            <div className="section-body">
+              <div className="work-focus">
+                <article className="focus-card">
+                  <span>01 / FIELD</span>
+                  <h3>Make the plan usable.</h3>
+                  <p>Daily and weekly work planning, site coordination, and managing labour and machinery around the sequence of construction.</p>
+                </article>
+                <article className="focus-card">
+                  <span>02 / DELIVERY</span>
+                  <h3>Make the detail hold.</h3>
+                  <p>Working with drawings, timelines, budgets and project teams to keep execution aligned with the intended design.</p>
+                </article>
+              </div>
+              <p className="career-note">
+                <strong>Current</strong> — Site Engineer, Bandan Bhagwati Nirman Sewa Pvt. Ltd. &nbsp;·&nbsp;
+                <strong>Previously</strong> — Construction Project Engineer, Tundi Group; Construction Supervisor Intern, Bodhi Holding.
+              </p>
+              <div className="education-box">
+                <div className="job-head">
+                  <h3 className="education-title">B.E. Civil Engineering</h3>
+                  <p className="when">Pokhara University · 2023</p>
+                </div>
+                <p className="org">Nepal College of Information Technology, Kathmandu</p>
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="section" id="research">
           <div className="wrap section-grid">
-            <SectionHeading index="03" title="Research" />
+            <SectionHeading index="04" title="Research" />
             <div className="section-body">
-              <h3 className="subheading">Questions worth building toward</h3>
+              <p className="meta-label">Questions I keep returning to</p>
               <div className="interests">
-                {interests.map((interest) => (
-                  <div className="interest" key={interest.heading}>
-                    <h3>{interest.heading}</h3>
-                    <ul className="plain-list">
-                      {interest.items.map((item) => <li key={item}>{item}</li>)}
-                    </ul>
-                  </div>
-                ))}
+                <article className="interest">
+                  <h3>Resilience &amp; risk</h3>
+                  <ul className="plain-list"><li>Infrastructure resilience</li><li>Seismic safety and disaster risk reduction</li></ul>
+                </article>
+                <article className="interest">
+                  <h3>Better ways to build</h3>
+                  <ul className="plain-list"><li>Construction management and safety</li><li>BIM, automation and data-informed decisions</li></ul>
+                </article>
+                <article className="interest">
+                  <h3>Material choices</h3>
+                  <ul className="plain-list"><li>Sustainable construction</li><li>Life-cycle thinking and embodied carbon</li></ul>
+                </article>
               </div>
               <article className="publication">
                 <p className="meta-label">Publication · Paper-based article</p>
                 <h3>Construction Workforce Development in Nepal: Addressing the Skills Gap</h3>
-                <p>
-                  <a href="https://doi.org/10.5281/ZENODO.13854213" target="_blank" rel="noopener noreferrer">
-                    DOI 10.5281/ZENODO.13854213 <ArrowUpRight size={13} aria-hidden="true" />
-                  </a>
-                </p>
+                <p><a href="https://doi.org/10.5281/ZENODO.13854213" target="_blank" rel="noopener noreferrer">
+                  Read the paper · DOI 10.5281/ZENODO.13854213 <ArrowUpRight size={13} aria-hidden="true" />
+                </a></p>
               </article>
               <div className="profile-links" aria-label="Research profiles">
-                <a href="https://orcid.org/0009-0004-1814-6996" target="_blank" rel="noopener noreferrer" data-testid="link-orcid">
-                  ORCID <ArrowUpRight size={13} aria-hidden="true" />
-                </a>
-                <a href="https://www.researchgate.net/profile/Bibek-Regmi-7" target="_blank" rel="noopener noreferrer" data-testid="link-researchgate">
-                  ResearchGate <ArrowUpRight size={13} aria-hidden="true" />
-                </a>
+                <a href="https://orcid.org/0009-0004-1814-6996" target="_blank" rel="noopener noreferrer" data-testid="link-orcid">ORCID <ArrowUpRight size={13} aria-hidden="true" /></a>
+                <a href="https://www.researchgate.net/profile/Bibek-Regmi-7" target="_blank" rel="noopener noreferrer" data-testid="link-researchgate">ResearchGate <ArrowUpRight size={13} aria-hidden="true" /></a>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section className="section" id="education">
-          <div className="wrap section-grid">
-            <SectionHeading index="04" title="Education" />
-            <div className="section-body">
-              <div className="education-box">
-                <div className="job-head">
-                  <h3 className="education-title">Bachelor of Engineering in Civil Engineering</h3>
-                  <p className="when">June 2023</p>
-                </div>
-                <p className="org">Pokhara University, Nepal College of Information Technology (N.C.I.T), Kathmandu, Nepal</p>
-                <p>Minor: Environmental Impact Assessment / Trail Suspension Bridge</p>
-              </div>
-              <div className="affiliations">
-                <h3 className="subheading">Professional affiliations</h3>
-                <ul className="plain-list">
-                  <li>Nepal Engineering Council: Licensed Engineer</li>
-                  <li>Nepal Engineering Association: Member</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section" id="skills">
-          <div className="wrap section-grid">
-            <SectionHeading index="05" title="Skills" />
-            <dl className="section-body skills">
-              <div><dt>Building analysis</dt><dd>E-TABS</dd></div>
-              <div><dt>Modeling</dt><dd>AutoCAD 3D</dd></div>
-              <div><dt>Road design</dt><dd>Smart Road</dd></div>
-              <div><dt>Programming</dt><dd>Python for cost estimation, schedule analysis, and data visualization</dd></div>
-              <div><dt>BIM and automation</dt><dd>Python (Revit API / pyRevit, Dynamo scripting)</dd></div>
-              <div><dt>Operating systems</dt><dd>Windows, macOS X</dd></div>
-              <div><dt>Languages</dt><dd>Nepali (native), English (fluent), Hindi (fluent)</dd></div>
-            </dl>
           </div>
         </section>
 
         <section className="section" id="service">
           <div className="wrap section-grid">
-            <SectionHeading index="06" title="Service" />
-            <div className="section-body">
-              <article className="volunteer">
-                <div className="job-head">
-                  <h3>Disaster Risk Reduction Workshops</h3>
-                  <p className="when">October 2024 to February 2025</p>
-                </div>
-                <p className="org">Engineers Without Borders (EWB) Nepal</p>
-                <ul>
-                  <li>Helped create educational materials that explain DRR concepts, tools, and practices</li>
-                  <li>Assisted with workshop logistics, such as scheduling, venue setup, and material distribution</li>
-                  <li>Provided civil engineering expertise in discussions on resilient infrastructure and design</li>
-                </ul>
-              </article>
-              <article className="volunteer">
-                <div className="job-head">
-                  <h3>Community Development Initiatives Volunteer</h3>
-                  <p className="when">July 2023</p>
-                </div>
-                <p className="org">Habitat for Humanity Nepal</p>
-                <ul>
-                  <li>Advised on best practices for materials and techniques to ensure structural integrity during construction</li>
-                  <li>Helped coordinate project timelines, resources, and teams</li>
-                  <li>Trained local volunteers and community members in basic construction techniques and safety practices</li>
-                  <li>Facilitated discussions with community members to understand their needs and bring their feedback into planning</li>
-                </ul>
-              </article>
-              <article className="volunteer">
-                <div className="job-head">
-                  <h3>Tutor</h3>
-                  <p className="when">August to September 2023</p>
-                </div>
-                <p className="org">Triyog High School, Kathmandu</p>
-                <ul>
-                  <li>Assisted high school students with geometry, pre-calculus, and calculus</li>
-                  <li>Developed quizzes to help students understand mathematics material</li>
-                </ul>
-              </article>
-              <div className="activity-list">
-                <h3 className="subheading">Activities</h3>
-                <ul className="plain-list">
-                  <li>Volunteer Coordinator, Food Bank (2022 to present): organized weekly food distribution events with a team of 15 volunteers</li>
-                  <li>Debate Club Member (2021 to present): 2nd place, regional competition, 2023</li>
-                  <li>YouTube content creator and guitarist (2020 to present)</li>
-                </ul>
+            <SectionHeading index="05" title="Service" />
+            <div className="section-body recognition">
+              <div className="recognition-copy">
+                <p className="meta-label">Recognition · Volunteer service</p>
+                <h3>Sharing engineering knowledge where resilience begins.</h3>
+                <p>
+                  Engineers Without Borders Nepal recognised my contribution to Disaster Risk Reduction workshops: helping develop learning materials, support workshop logistics, and bring a civil engineering perspective to conversations on resilient infrastructure.
+                </p>
+                <p className="recognition-date">October 2024 — February 2025 · Issued 15 February 2025</p>
+              </div>
+              <figure>
+                <a className="certificate-link" href={certificateImage} target="_blank" rel="noopener noreferrer" aria-label="Open certificate of appreciation from Engineers Without Borders Nepal">
+                  <img src={certificateImage} alt="Certificate of Appreciation awarded to Bibek Regmi by Engineers Without Borders Nepal for volunteer contribution to Disaster Risk Reduction workshops, October 2024 to February 2025; issued 15 February 2025." />
+                </a>
+                <figcaption className="certificate-caption">A note of thanks from EWB Nepal ↗</figcaption>
+              </figure>
+              <div className="service-short">
+                <strong>Community development volunteer · Habitat for Humanity Nepal</strong>
+                Shared construction and safety knowledge in community initiatives.
               </div>
             </div>
           </div>
@@ -411,16 +302,17 @@ function App() {
         <section className="section contact-section" id="contact">
           <div className="wrap section-grid contact-grid">
             <div>
-              <SectionHeading index="07" title="Contact" />
-              <p className="contact-lede">Good infrastructure starts with thoughtful conversations.</p>
+              <SectionHeading index="06" title="Contact" />
+              <p className="contact-lede">Let’s talk about what we can build better.</p>
             </div>
             <div className="contact-details">
-              <p>For research collaboration, graduate study, or engineering work, email is the best way to reach me.</p>
+              <p>For engineering work, research collaboration, or graduate study, email is the best way to reach me.</p>
               <p><a className="email" href="mailto:bibekregmi23@gmail.com" data-testid="link-email">bibekregmi23@gmail.com</a></p>
               <div className="contact-links">
                 <a href="https://www.linkedin.com/in/bibekregmi23/" target="_blank" rel="noopener noreferrer" data-testid="link-linkedin">LinkedIn <ArrowUpRight size={12} aria-hidden="true" /></a>
                 <a href="https://www.researchgate.net/profile/Bibek-Regmi-7" target="_blank" rel="noopener noreferrer">ResearchGate <ArrowUpRight size={12} aria-hidden="true" /></a>
                 <a href="https://orcid.org/0009-0004-1814-6996" target="_blank" rel="noopener noreferrer">ORCID <ArrowUpRight size={12} aria-hidden="true" /></a>
+                <a href="https://doi.org/10.5281/ZENODO.13854213" target="_blank" rel="noopener noreferrer">Publication <ArrowUpRight size={12} aria-hidden="true" /></a>
                 <a href="/Bibek_Regmi_CV.pdf" download>CV (PDF) <ArrowDownToLine size={12} aria-hidden="true" /></a>
               </div>
             </div>

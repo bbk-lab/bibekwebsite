@@ -1,0 +1,1 @@
+- [Publishing portfolio assets](portfolio-assets.md) — copy web-ready images into tracked portfolio assets; Replit's `attached_assets` directory is globally ignored by Git.
