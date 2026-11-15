@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Bibek Regmi — Civil Engineer"
+description = "A creative professional portfolio for Bibek Regmi, a licensed civil engineer in Nepal, featuring his experience, research, education, skills, and downloadable CV."
+version = "1.0.0"
+id = "artifacts/bibek-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21996
+
+[services.development]
+run = "pnpm --filter @workspace/bibek-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bibek-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bibek-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21996"
+BASE_PATH = "/"
