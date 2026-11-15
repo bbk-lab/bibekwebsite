@@ -1,0 +1,28 @@
+kind = "video"
+previewPath = "/bibek-intro-film/"
+title = "Bibek Regmi — Intro Film"
+description = "A short, looping introduction to Bibek Regmi’s civil-engineering practice, for sharing alongside his portfolio website."
+version = "1.0.0"
+id = "artifacts/bibek-intro-film"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/bibek-intro-film/" ]
+localPort = 19630
+
+[services.development]
+run = "pnpm --filter @workspace/bibek-intro-film run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bibek-intro-film", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bibek-intro-film/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19630"
+BASE_PATH = "/bibek-intro-film/"
