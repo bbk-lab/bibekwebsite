@@ -1,4 +1,5 @@
 kind = "video"
+videoAspectRatio = "16:9"
 previewPath = "/bibek-intro-film/"
 title = "Bibek Regmi — Intro Film"
 description = "A short, looping introduction to Bibek Regmi’s civil-engineering practice, for sharing alongside his portfolio website."

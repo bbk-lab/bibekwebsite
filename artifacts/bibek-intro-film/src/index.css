@@ -1,27 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
 @import 'tailwindcss';
 
-/* REPLACE THESE -- define your own palette and fonts for each video */
 :root {
-  --color-primary: #000000;
-  --color-secondary: #6b7280;
-  --color-accent: #3b82f6;
-
-  --color-bg-light: #ffffff;
-  --color-bg-dark: #0f172a;
-  --color-bg-muted: #f8fafc;
-
-  --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #9ca3af;
-  --color-text-inverse: #ffffff;
-
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  color-scheme: light;
+  --paper: #f1eee6;
+  --paper-dim: #e7e2d6;
+  --ink: #222a27;
+  --green: #315c50;
+  --orange: #d16b43;
+  --muted: #65716a;
+  --rule: #c9c8bb;
+  --color-primary: #315c50;
+  --color-secondary: #65716a;
+  --color-accent: #d16b43;
+  --color-bg-light: #f1eee6;
+  --color-bg-dark: #315c50;
+  --color-bg-muted: #e7e2d6;
+  --color-text-primary: #222a27;
+  --color-text-secondary: #65716a;
+  --color-text-muted: #65716a;
+  --color-text-inverse: #f1eee6;
+  --color-success: #315c50;
+  --color-warning: #d16b43;
+  --color-error: #a94732;
+  --font-display: 'Manrope', sans-serif;
+  --font-body: 'Newsreader', Georgia, serif;
+  --font-mono: 'DM Mono', monospace;
 }
 
 @theme inline {
@@ -43,10 +47,42 @@
   --font-mono: var(--font-mono);
 }
 
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; height: 100%; margin: 0; }
 body {
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+button { font: inherit; }
+
+.film-scene { position: absolute; inset: 0; overflow: hidden; }
+.film-mono { font: 500 1.65vmin/1.3 var(--font-mono); letter-spacing: .11em; text-transform: uppercase; }
+.film-eyebrow { font: 700 2vmin/1.35 var(--font-display); letter-spacing: .18em; text-transform: uppercase; }
+.film-caption { font: 400 3.1vmin/1.22 var(--font-body); }
+.film-title { font: 800 14vmin/.85 var(--font-display); letter-spacing: -.085em; }
+.film-serif { font: 500 6vmin/1.02 var(--font-body); letter-spacing: -.035em; }
+.bridge-art { position: absolute; right: 6%; top: 11%; width: 58%; height: 78%; }
+.bridge-art line, .bridge-art path { fill: none; stroke-linecap: square; }
+.plan-grid { background-image: linear-gradient(90deg, #315c5014 1px, transparent 1px), linear-gradient(#315c5014 1px, transparent 1px); background-size: 5.8vmin 5.8vmin; }
+.scene-label { position: absolute; max-width: 44vw; color: var(--ink); }
+.timeline-stroke { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.research-contours { opacity: .55; }
+.certificate-frame { box-shadow: 1.3vmin 1.3vmin 0 #d6d0c2; }
+.control-sensor { position: absolute; z-index: 50; inset-inline: 0; bottom: 0; height: 25%; display: flex; flex-direction: column; justify-content: flex-end; }
+.control-bar { display: flex; align-items: center; gap: 1.2vmin; padding: 1.2vmin 2vmin; background: rgb(34 42 39 / 82%); color: var(--paper); backdrop-filter: blur(10px); transition: transform .22s ease, opacity .22s ease; }
+.control-bar.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
+.control-button { display: grid; place-items: center; width: 4.3vmin; height: 4.3vmin; min-width: 40px; min-height: 40px; border: 0; border-radius: 5px; background: transparent; color: #f1eee6c4; cursor: pointer; }
+.control-button:hover, .control-button[aria-pressed="true"] { color: var(--paper); background: #ffffff1c; }
+.playback-track { display: flex; gap: .45vmin; flex: 1; }
+.playback-segment { position: relative; height: .75vmin; min-height: 7px; flex: 1; padding: 0; overflow: hidden; border: 0; border-radius: 99px; background: #ffffff38; cursor: pointer; }
+.playback-fill { position: absolute; inset: 0 auto 0 0; background: var(--paper); }
+.control-readout { flex-shrink: 0; color: #f1eee6bf; font: 1.5vmin var(--font-mono); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
 
 .video-media-frame {
