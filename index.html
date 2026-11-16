@@ -16,6 +16,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Portfolio film */
+    .film { margin: 0; }
+    .film video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--ink); border: 1.5px solid var(--ink); }
+    .film figcaption { margin-top: .7rem; font: 500 .92rem var(--font-head); color: var(--muted); }
+  </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -26,6 +32,7 @@
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
       <nav id="nav" class="nav" aria-label="Main">
         <a href="#about">About</a>
+        <a href="#film">Film</a>
         <a href="#experience">Experience</a>
         <a href="#research">Research</a>
         <a href="#education">Education</a>
@@ -94,6 +101,22 @@
             <div><dt>Next</dt><dd>MS in Construction Management, 2027 intake</dd></div>
           </dl>
         </figure>
+      </div>
+    </section>
+
+    <!-- FILM -->
+    <section class="sec" id="film">
+      <div class="wrap sec-grid">
+        <h2>Film</h2>
+        <div class="sec-body">
+          <figure class="film">
+            <video controls playsinline preload="metadata" poster="portfolio-film-poster.jpg" aria-describedby="film-cap">
+              <source src="portfolio-film.mp4" type="video/mp4">
+              Your browser does not support embedded video. <a href="portfolio-film.mp4">Download the film (MP4)</a>.
+            </video>
+            <figcaption id="film-cap">A 30-second visual portfolio: site engineering, research, and service.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
